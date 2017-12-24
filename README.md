@@ -33,6 +33,12 @@
 5) Headers, Preview, Response 등등 나와있는 패널이 나오거나 있을텐데, Headers 탭에서 'Request Headers' 섹션 아래에 있는 'client-id'를 찾는다.
 6) 클릭 > 드래그 해서 하이라이트 한후 복사한다.
 
-### 아... 심심해
+### 연명
 
 유튜브 채널로 와서 구독, 그리고 기부도 좀 해봐라. 2027년에는 내가 더 좋은 교육을 세우고 싶다. 그러니깐 그때까지 연명하기 위해 기부를 부탁한다.
+
+[유튜브 채널](https://www.youtube.com/channel/UC0i0OcWfKJwCPzmPdxZ7ylQ)
+
+[기부 patreon](https://www.patreon.com/youngim)
+
+Paypal 이메일: chulman444@gmail.com
