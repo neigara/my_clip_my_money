@@ -10,9 +10,10 @@ I use Python. I did it at 3.5 or 3.6.\
 
 If you want to download more than 20, enter a number after --l or --limit.  There may be more than 100.\
 When downloading, only 'one week' clips are targeted like clip pages.\
-If you want to receive in all period, add `--filter-type ALL_TIME`
-For 24 hours `--filter-type LAST_DAY`
-For 30 days `--filter-type LAST_MONTH`
+You can choose how old are the clips
+* For all period, `--filter-type ALL_TIME`
+* For 24 hours `--filter-type LAST_DAY`
+* For 30 days `--filter-type LAST_MONTH`
 
 Example : get top 150 clips from past month\
 (didn't understand this part)\
