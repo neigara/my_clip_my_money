@@ -1,9 +1,9 @@
-import json, re, pycurl, argparse
+import json, re, pycurl, argparse, certifi
 from io import BytesIO
 
 GQL_PAYLOAD = "gql_payload"
 # Only thumbnailURL and title. No 
-# GQL_PAYLOAD = "gql_payload_shortened"
+#GQL_PAYLOAD = "gql_payload_shortened"
 
 # YOUR CLIENT ID. You get this by pressing F12 on the clips page.
 # Maybe hit F5 to refresh to reload the request.
@@ -12,7 +12,7 @@ GQL_PAYLOAD = "gql_payload"
 # YOUR_CLIENT_ID.
 # 
 # Mine starts with 'kim' and ends with 'ko', and was 30 digits long.
-CLIENT_ID = "client-id:YOUR_CLIENT_ID"
+CLIENT_ID = "client-id:kimne78kx3ncx6brgo4mv6wki5h1ko"
 
 def main():
   # Argparse
@@ -23,6 +23,7 @@ def main():
   parser.add_argument('--download-clips', action='store_true', default=False)
   parser.add_argument('--verbose', action='store_true', default=False)
   parser.add_argument('--url', action='store_true', default=False)
+  parser.add_argument('--title', action='store_true', default=False)
   args = parser.parse_args()
 
   # Get 'details' based on 'gql_payload' file to download clips from
@@ -31,12 +32,15 @@ def main():
   # argparse option to print out this details.
   if args.verbose:
     print(details)
-   
-  # get only clips url 
+
   if args.url:
     for clips in details:
-      print (clips['url']
-    
+      print (clips['url'])	
+	
+  if args.title:
+    for clips in details:
+      print (clips['title'])	
+
   # Don't download if this option wasn't set.
   if not args.download_clips:
     print("Do download clips, use `--download-clips` option")
@@ -45,9 +49,12 @@ def main():
   # Start downloading. You can quit with 'Ctrl + c'.
   # Downloads under 'clips/' folder. Make sure the folder exists.
   c = pycurl.Curl()
+  c.setopt(pycurl.CAINFO, certifi.where())
+
   for a in details:
     u = re.sub(r'-preview.*', ".mp4", a["thumbnailURL"])
     t = a["title"]
+    t = cleanTitle(t)
     f = open("clips/" + t, 'wb')
     print("Downloading " + t)
     c.setopt(c.URL, u)
@@ -111,6 +118,7 @@ def getHTTPResponse(args, cursor=""):
   b = BytesIO()
 
   c = pycurl.Curl()
+  c.setopt(pycurl.CAINFO, certifi.where())
   c.setopt(c.URL, url)
   # c.HEADER ... doesn't work.
   c.setopt(c.HTTPHEADER, [CLIENT_ID])
@@ -125,5 +133,19 @@ def getHTTPResponse(args, cursor=""):
   response = b.getvalue().decode('utf-8')
   return response
 
+def cleanTitle(name):
+  #Used to escape special caracters from clip's title
+  cleanedTitle = name.translate(str.maketrans({"#":  r"-",
+                                          "~":  r"-",
+                                          "%": r"-",
+                                          "^":  r"-",
+                                          "$":  r"-",
+                                          "*":  r"-",
+										  ";":	r"-",
+                                          ".":  r"-"}))
+										  
+  return cleanedTitle
+  
+  
 if __name__=="__main__":
   main()
