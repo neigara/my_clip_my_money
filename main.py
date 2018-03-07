@@ -22,6 +22,7 @@ def main():
   parser.add_argument('--limit', type=int, default=20)
   parser.add_argument('--download-clips', action='store_true', default=False)
   parser.add_argument('--verbose', action='store_true', default=False)
+  parser.add_argument('--url', action='store_true', default=False)
   args = parser.parse_args()
 
   # Get 'details' based on 'gql_payload' file to download clips from
@@ -30,7 +31,12 @@ def main():
   # argparse option to print out this details.
   if args.verbose:
     print(details)
-
+   
+  # get only clips url 
+  if args.url:
+    for clips in details:
+      print (clips['url']
+    
   # Don't download if this option wasn't set.
   if not args.download_clips:
     print("Do download clips, use `--download-clips` option")
